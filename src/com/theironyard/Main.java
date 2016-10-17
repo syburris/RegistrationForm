@@ -19,7 +19,7 @@ public class Main {
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, name VARCHAR, address VARCHAR, email VARCHAR)");
     }
 
-    public static void insertUser (Connection conn, String name, String address, String email) throws SQLException {
+    public static void insertUser(Connection conn, String name, String address, String email) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?, ?, ?)");
         stmt.setString(1, name);
         stmt.setString(2, address);
@@ -27,7 +27,7 @@ public class Main {
         stmt.execute();
     }
 
-    public static ArrayList<User> selectUsers (Connection conn) throws SQLException {
+    public static ArrayList<User> selectUsers(Connection conn) throws SQLException {
         ArrayList<User> users = new ArrayList<>();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users");
         ResultSet results = stmt.executeQuery();
