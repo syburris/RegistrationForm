@@ -1,9 +1,13 @@
 package com.theironyard;
 
+import jodd.json.JsonParser;
+import jodd.json.JsonSerializer;
 import spark.Spark;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringJoiner;
 
 public class Main {
 
@@ -12,6 +16,26 @@ public class Main {
         createTables(conn);
         Spark.externalStaticFileLocation("public");
         Spark.init();
+
+        Spark.get(
+                "/user",
+                (request, response) -> {
+                    ArrayList<User> users = selectUsers(conn);
+                    JsonSerializer serializer = new JsonSerializer();
+                    UserWrapper wrapper = new UserWrapper(users);
+                    return serializer.deep(true).serialize(wrapper);
+                }
+        );
+
+        Spark.post(
+                "user",
+                (request, response) -> {
+                    String body = request.body();
+                    JsonParser parser = new JsonParser();
+                    HashMap<String, String> user = parser.parse(body);
+                    return null;
+                }
+        );
     }
 
     public static void createTables (Connection conn) throws SQLException {

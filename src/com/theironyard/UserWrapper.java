@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by stevenburris on 10/17/16.
  */
-public class UsersWrapper {
+public class UserWrapper {
     ArrayList<User> users = new ArrayList<>();
 
-    public UsersWrapper() {
+    public UserWrapper() {
     }
 
-    public UsersWrapper(ArrayList<User> users) {
+    public UserWrapper(ArrayList<User> users) {
         this.users = users;
     }
 
