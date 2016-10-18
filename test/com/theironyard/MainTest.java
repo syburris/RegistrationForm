@@ -23,7 +23,8 @@ public class MainTest {
     @Test
     public void testUser() throws SQLException {
         Connection conn = startConnection();
-        Main.insertUser(conn,"Steven","address","email@email.com");
+        User user = new User(1,"Steven", "alskdjflksjflksdj", "email@email.com");
+        Main.insertUser(conn,user);
         ArrayList<User> users = Main.selectUsers(conn);
         conn.close();
         assertTrue(!users.isEmpty());

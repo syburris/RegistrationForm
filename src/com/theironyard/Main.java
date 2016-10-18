@@ -28,11 +28,23 @@ public class Main {
         );
 
         Spark.post(
-                "user",
+                "/user",
                 (request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
-                    HashMap<String, String> user = parser.parse(body);
+                    User user = parser.parse(body);
+                    insertUser(conn, user);
+                    return null;
+                }
+        );
+
+        Spark.put(
+                "/user",
+                (request, response) -> {
+                    String body = request.body();
+                    JsonParser parser = new JsonParser();
+                    User user = parser.parse(body);
+                    updateUser(conn,user);
                     return null;
                 }
         );
@@ -43,11 +55,11 @@ public class Main {
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, name VARCHAR, address VARCHAR, email VARCHAR)");
     }
 
-    public static void insertUser(Connection conn, String name, String address, String email) throws SQLException {
+    public static void insertUser(Connection conn, User user) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?, ?, ?)");
-        stmt.setString(1, name);
-        stmt.setString(2, address);
-        stmt.setString(3, email);
+        stmt.setString(1, user.name);
+        stmt.setString(2, user.address);
+        stmt.setString(3, user.email);
         stmt.execute();
     }
 
@@ -66,13 +78,13 @@ public class Main {
         return users;
     }
 
-    public static void updateUser(Connection conn, int id, String name, String address, String email) throws SQLException {
+    public static void updateUser(Connection conn, User user) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("UPDATE users SET name = ?, address = ?, email = ? " +
                 "WHERE id = ?");
-        stmt.setString(1,name);
-        stmt.setString(2,address);
-        stmt.setString(3, email);
-        stmt.setInt(4,id);
+        stmt.setString(1,user.name);
+        stmt.setString(2,user.address);
+        stmt.setString(3, user.email);
+        stmt.setInt(4,user.id);
         stmt.execute();
     }
 
