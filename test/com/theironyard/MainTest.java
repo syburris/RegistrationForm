@@ -50,10 +50,10 @@ public class MainTest {
         User user2 = new User(2, "Allan", "alskdjflk", "email@email.com");
         Main.insertUser(conn, user);
         Main.insertUser(conn, user2);
-        ArrayList<User> users = Main.selectUsers(conn);
         Main.deleteUser(conn, 1);
+        ArrayList<User> users = Main.selectUsers(conn);
         conn.close();
-        assertTrue(users.size() = 1);
+        assertTrue(users.get(0).username == "Allan");
     }
 
 }
