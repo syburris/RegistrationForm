@@ -18,34 +18,41 @@ public class Main {
         Spark.init();
 
         Spark.get(
-                "/user",
+                "/get-user",
                 (request, response) -> {
                     ArrayList<User> users = selectUsers(conn);
                     JsonSerializer serializer = new JsonSerializer();
-                    UserWrapper wrapper = new UserWrapper(users);
-                    return serializer.deep(true).serialize(wrapper);
+//                    UserWrapper wrapper = new UserWrapper(users);
+                    return serializer.serialize(users);
                 }
         );
 
         Spark.post(
-                "/user",
-                (request, response) -> {
+                "/add-user",
+                ((request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
                     User user = parser.parse(body, User.class);
                     insertUser(conn, user);
                     return "";
-                }
+                })
         );
 
         Spark.put(
                 "/user",
-                (request, response) -> {
+                ((request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
                     User user = parser.parse(body, User.class);
                     updateUser(conn, user);
                     return "";
+                })
+        );
+
+        Spark.delete(
+                "/user",
+                (request, response) -> {
+                    return null;
                 }
         );
     }
