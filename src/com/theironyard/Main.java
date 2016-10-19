@@ -32,7 +32,7 @@ public class Main {
                 (request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
-                    User user = parser.parse(body);
+                    User user = parser.parse(body, User.class);
                     insertUser(conn, user);
                     return null;
                 }
