@@ -30,4 +30,30 @@ public class MainTest {
         assertTrue(!users.isEmpty());
     }
 
+    @Test
+    public void testUpdate() throws SQLException {
+        Connection conn = startConnection();
+        User user = new User(1, "Steven", "alskdjf", "email@emial.com");
+        User newUser = new User(1, "Allan", "alskdjflk", "email@email.com");
+        Main.insertUser(conn,user);
+        Main.updateUser(conn,newUser);
+        ArrayList<User> users = Main.selectUsers(conn);
+        conn.close();
+        assertTrue(!users.isEmpty());
+        assertTrue(users.get(0).username == "Allan");
+    }
+
+    @Test
+    public void testDelete() throws SQLException {
+        Connection conn = startConnection();
+        User user = new User(1, "Steven", "alskdjf", "email@emial.com");
+        User user2 = new User(2, "Allan", "alskdjflk", "email@email.com");
+        Main.insertUser(conn, user);
+        Main.insertUser(conn, user2);
+        ArrayList<User> users = Main.selectUsers(conn);
+        Main.deleteUser(conn, 1);
+        conn.close();
+        assertTrue(users.size() = 1);
+    }
+
 }

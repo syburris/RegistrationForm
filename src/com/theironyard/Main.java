@@ -18,7 +18,7 @@ public class Main {
         Spark.init();
 
         Spark.get(
-                "/get-user",
+                "/user",
                 (request, response) -> {
                     ArrayList<User> users = selectUsers(conn);
                     JsonSerializer serializer = new JsonSerializer();
@@ -28,38 +28,41 @@ public class Main {
         );
 
         Spark.post(
-                "/add-user",
-                ((request, response) -> {
+                "/user",
+                (request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
                     User user = parser.parse(body, User.class);
                     insertUser(conn, user);
                     return "";
-                })
+                }
         );
 
         Spark.put(
                 "/user",
-                ((request, response) -> {
+                (request, response) -> {
                     String body = request.body();
                     JsonParser parser = new JsonParser();
                     User user = parser.parse(body, User.class);
                     updateUser(conn, user);
                     return "";
-                })
+                }
         );
 
         Spark.delete(
-                "/user",
+                "/user/:id",
                 (request, response) -> {
-                    return null;
+                    JsonParser parser = new JsonParser();
+                    int id = parser.parse(request.params(":id"));
+                    deleteUser(conn, id);
+                    return "";
                 }
         );
     }
 
     public static void createTables (Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, name VARCHAR, address VARCHAR, email VARCHAR)");
+        stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, username VARCHAR, address VARCHAR, email VARCHAR)");
     }
 
     public static void insertUser(Connection conn, User user) throws SQLException {
