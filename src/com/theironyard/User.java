@@ -5,22 +5,22 @@ package com.theironyard;
  */
 public class User {
     int id;
-    String name;
+    String username;
     String address;
     String email;
 
     public User() {
     }
 
-    public User(int id, String name, String address, String email) {
+    public User(int id, String username, String address, String email) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.address = address;
         this.email = email;
     }
 
-    public User(String name, String address, String email) {
-        this.name = name;
+    public User(String username, String address, String email) {
+        this.username = username;
         this.address = address;
         this.email = email;
     }
@@ -34,11 +34,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getAddress() {
