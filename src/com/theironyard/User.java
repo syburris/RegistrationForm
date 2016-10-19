@@ -4,7 +4,7 @@ package com.theironyard;
  * Created by stevenburris on 10/17/16.
  */
 public class User {
-    int id;
+    Integer id;
     String username;
     String address;
     String email;
@@ -12,7 +12,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String address, String email) {
+    public User(Integer id, String username, String address, String email) {
         this.id = id;
         this.username = username;
         this.address = address;

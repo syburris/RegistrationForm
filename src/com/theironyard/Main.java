@@ -53,7 +53,7 @@ public class Main {
                 "/user/:id",
                 (request, response) -> {
                     JsonParser parser = new JsonParser();
-                    int id = parser.parse(request.params(":id"));
+                    Integer id = parser.parse(request.params(":id"));
                     deleteUser(conn, id);
                     return "";
                 }
@@ -78,7 +78,7 @@ public class Main {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users");
         ResultSet results = stmt.executeQuery();
         while (results.next()) {
-            int id = results.getInt("id");
+            Integer id = results.getInt("id");
             String name = results.getString("username");
             String address = results.getString("address");
             String email = results.getString("email");
@@ -99,7 +99,7 @@ public class Main {
         return new User(user.id, user.username, user.address, user.email);
     }
 
-    public static void deleteUser(Connection conn, int id) throws SQLException {
+    public static void deleteUser(Connection conn, Integer id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE id = ?");
         stmt.setInt(1,id);
         stmt.execute();
