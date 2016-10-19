@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
+        Server.createWebServer().start();
         Connection conn = DriverManager.getConnection("jdbc:h2:./main");
         createTables(conn);
         Spark.externalStaticFileLocation("public");
@@ -23,7 +24,6 @@ public class Main {
                 (request, response) -> {
                     ArrayList<User> users = selectUsers(conn);
                     JsonSerializer serializer = new JsonSerializer();
-//                    UserWrapper wrapper = new UserWrapper(users);
                     return serializer.serialize(users);
                 }
         );
